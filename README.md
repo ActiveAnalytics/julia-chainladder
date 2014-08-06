@@ -5,9 +5,10 @@ Chain Ladder code for Julia programming language. From the blog http://active-an
 
 # Example:
 
+```
 require("chainladder") # loads the chainladder.jl script
 
-## The auto paid data from the ChainLadder package
+# The auto paid data from the ChainLadder package
 x = [[101125. 209921 266618 305107 327850 340669 348430 351193 353353 353584];
 [102541 203213 260677 303182 328932 340948 347333 349813 350523     NaN];
 [114932 227704 298120 345542 367760 377999 383611 385224     NaN     NaN];
@@ -18,17 +19,22 @@ x = [[101125. 209921 266618 305107 327850 340669 348430 351193 353353 353584];
 [127177 244249 317972     NaN     NaN     NaN     NaN     NaN     NaN     NaN];
 [128631 246803     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN];
 [126288     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN]]
+```
 
-## Benchmark
+```
+# Benchmark
 function bench(n::Int)
 	output = [@elapsed GetChainSquare(x) for i = 1:n]
 	output = output*1E6 # microseconds
 	return DataFrames.DataFrame(min = quantile(output, 0), lq = quantile(output, 0.25), median =quantile(output, 0.5), 
 			uq = quantile(output, 0.75), max = quantile(output, 1), neval = n)
 end
+```
 
-#= Benchmark output
+```
+# Benchmark output
 julia> bench(1000)
 1x6 DataFrame:
            min      lq  median      uq      max neval
 [1,]    49.271 50.5192 51.2425 52.0497 173178.0  1000
+```
