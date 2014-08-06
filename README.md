@@ -23,7 +23,7 @@ x = [[101125. 209921 266618 305107 327850 340669 348430 351193 353353 353584];
 [126288     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN     NaN]]
 ```
 
-# Funciton to carry out the benchmark for time test
+Funciton to carry out the benchmark for time test
 
 ```
 # Benchmark
