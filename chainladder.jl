@@ -9,12 +9,25 @@ end
 	
 
 function GetChainSquare(mTri)
-	nRow = size(mTri)[1]
 	nCol = size(mTri)[2]
 	dFactors = [GetFactor(i, mTri) for i = 1:(nCol - 1)]
-	dAntiDiag = diag(mTri[:, reverse(1:nRow)])[2:nCol]
+	dAntiDiag = diag(mTri[:, reverse(1:nCol)])[2:nCol]
 	for index = 1:length(dAntiDiag)
 		mTri[index + 1, (nCol - index + 1):nCol] = dAntiDiag[index]*cumprod(dFactors[(nCol - index):(nCol - 1)])
 	end
 	mTri
+end
+
+# Faster using single insertion
+function GetChainSquare2(mTri)
+	nCol = size(mTri)[2]
+	dFactors = [GetFactor(i, mTri) for i = 1:(nCol - 1)]
+	dAntiDiag = diag(mTri[:, reverse(1:nCol)])
+	for i = 2:nCol
+		dFac = cumprod(dFactors[(nCol - i + 1):(nCol - 1)])
+		for j = (nCol - i + 2):nCol
+			mTri[i, j] = dAntiDiag[i]*dFac[i + j - (nCol + 1)]
+		end
+	end
+	return mTri
 end
