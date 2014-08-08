@@ -23,8 +23,10 @@ function GetChainSquare2(mTri)
 	nCol = size(mTri)[2]
 	dFactors = [GetFactor(i, mTri) for i = 1:(nCol - 1)]
 	dAntiDiag = diag(mTri[:, reverse(1:nCol)])
+	dFac = []
 	for i = 2:nCol
-		dFac = cumprod(dFactors[(nCol - i + 1):(nCol - 1)])
+		nFac = dFactors[nCol - i + 1]
+		dFac = append!([nFac], nFac*dFac)
 		for j = (nCol - i + 2):nCol
 			mTri[i, j] = dAntiDiag[i]*dFac[i + j - (nCol + 1)]
 		end
