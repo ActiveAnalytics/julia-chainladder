@@ -20,15 +20,11 @@ end
 
 # Faster using single insertion
 function GetChainSquare2(mTri)
-	nCol = size(mTri)[2]
-	dFactors = [GetFactor(i, mTri) for i = 1:(nCol - 1)]
-	dAntiDiag = diag(mTri[:, reverse(1:nCol)])
-	dFac = []
-	for i = 2:nCol
-		nFac = dFactors[nCol - i + 1]
-		dFac = append!([nFac], nFac*dFac)
-		for j = (nCol - i + 2):nCol
-			mTri[i, j] = dAntiDiag[i]*dFac[i + j - (nCol + 1)]
+	p = size(mTri)[2] # This is the size of the triangle
+	dFactors = [GetFactor(i, mTri) for i = 1:(p - 1)] # the chain ladder factors
+	for i = 2:p # iterate over the rows
+		for j = (p - i + 2):p # iterative over the columns from the "antidiagonal"
+			mTri[i, j] = mTri[i, j-1]*dFactors[j - 1]
 		end
 	end
 	return mTri
