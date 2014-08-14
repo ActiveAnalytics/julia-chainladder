@@ -9,6 +9,7 @@ end
 	
 
 function GetChainSquare(mTri)
+	mTri = mTri[:, :] # copy matrix so as not to overwrite
 	nCol = size(mTri)[2]
 	dFactors = [GetFactor(i, mTri) for i = 1:(nCol - 1)]
 	dAntiDiag = diag(mTri[:, reverse(1:nCol)])[2:nCol]
@@ -20,6 +21,7 @@ end
 
 # Faster using single insertion
 function GetChainSquare2(mTri)
+	mTri = mTri[:, :] # copy matrix so as not to overwrite
 	p = size(mTri)[2] # This is the size of the triangle
 	dFactors = [GetFactor(i, mTri) for i = 1:(p - 1)] # the chain ladder factors
 	for i = 2:p # iterate over the rows
